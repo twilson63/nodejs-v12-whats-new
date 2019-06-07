@@ -1,16 +1,22 @@
 {
-  version: 2,
+  "version": 2,
   "builds": [
     {
       "src": "./api/index.js", "use": "@now/node"
     },
     {
-      "src": "./app/package.json", "use": @now/static-build", "config": {"destDir": "app/public"}
+      "src": "./app/package.json", "use": "@now/static-build", "config": {"distDir": "public"}
     }
   ],
   "routes": [
     {
-      "src": "/api", "dest": "./api/index.js"
+      "src": "/api/primes", "dest": "./api/index.js"
+    },
+    {
+      "src": "/global.css", "dest": "/app/global.css",
+      "src": "/bundle.css", "dest": "/app/bundle.css",
+      "src": "/bundle.js", "dest": "/app/bundle.js",
+      "src": "/", "dest": "/app/index.html"
     }
   ]
 }

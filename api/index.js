@@ -4,7 +4,7 @@ const primes = require('./primes.js')
 const threads = require('./threads.js')
 const app = express()
 
-app.get('/primes', async (req, res) => {
+app.get('/api/primes', async (req, res) => {
   if (req.query.w === '1') {
     const end = timeSpan()
     const results = primes(2, 1e7)
@@ -18,7 +18,7 @@ app.get('/primes', async (req, res) => {
 })
 
 
-app.get('/single', (req, res) => {
+app.get('/api/single', (req, res) => {
   const min = 2;
   const max = 1e7;
 
@@ -28,14 +28,14 @@ app.get('/single', (req, res) => {
   res.send({ time: end.seconds(), primes: results.length })
 })
 
-app.get('/worker', async (req, res) => {
+app.get('/api/worker', async (req, res) => {
   const end = timeSpan()
   const results = await threads(Number(req.query.w || '2'))
   res.send({ time: end.seconds(), primes: results.length })
 
 })
 
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
   res.send({ name: 'worker test'})
 })
 

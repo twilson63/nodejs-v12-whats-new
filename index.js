@@ -4,7 +4,7 @@ const api = require('./api')
 
 const app = express()
 
-app.use('/api', api)
+app.use(api)
 app.use(express.static('./app/public'))
 
 app.get('*', (req, res) => {

@@ -1,4 +1,5 @@
 applications:
   - name: tnw-nodejs-worker-threads
     memory: 128M
-    disk_quota: 50M
+    disk_quota: 200M
+    buildpack: https://github.com/heroku/heroku-buildpack-nodejs#v83
