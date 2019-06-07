@@ -1,0 +1,95 @@
+<script>
+  import Header from '../components/Header.html'
+  import Card from '../components/Card.html'
+  import Footer from '../components/Footer.html'
+
+  let noThreadsSeconds = null
+  let twoThreadsSeconds = null
+  let fourThreadsSeconds = null
+
+  let noThreadsLoading = false
+  let twoThreadsLoading = false
+  let fourThreadsLoading = false
+
+function reset() {
+  noThreadsSeconds = null
+  noThreadsLoading = false
+  twoThreadsSeconds = null
+  twoThreadsLoading = false
+  fourThreadsSeconds = null
+  fourThreadsLoading = false
+}
+
+function doFetch(n=1) {
+  return fetch('/api/primes?w=' + n)
+    .then(r => r.json())
+  
+}
+
+
+function noThreads() {
+  noThreadsLoading = true
+  doFetch(1)
+    .then(result => {
+      if (noThreadsLoading) {
+        noThreadsLoading = false
+        noThreadsSeconds = result.time
+      }
+    })
+}
+
+function twoThreads() {
+  twoThreadsLoading = true
+  doFetch(2)
+    .then(result => {
+      if (twoThreadsLoading) {
+        twoThreadsLoading = false
+        twoThreadsSeconds = result.time
+      }
+    })
+}
+
+function fourThreads() {
+  fourThreadsLoading = true
+  doFetch(4)
+    .then(result => {
+      if (fourThreadsLoading) {
+        fourThreadsLoading = false
+        fourThreadsSeconds = result.time
+      }
+    })
+}
+</script>
+<Header />
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <Card 
+          title="No Threads" 
+          seconds={noThreadsSeconds} 
+          on:submit={noThreads} 
+          loading={noThreadsLoading}  
+        />
+      </div>
+      <div class="column">
+        <Card 
+          title="2 Threads" 
+          seconds={twoThreadsSeconds} 
+          on:submit={twoThreads} 
+          loading={twoThreadsLoading}
+        />
+      </div>
+      <div class="column">
+        <Card 
+          title="4 Threads" 
+          seconds={fourThreadsSeconds} 
+          on:submit={fourThreads} 
+          loading={fourThreadsLoading}
+        />
+      </div>
+    </div>
+    <button class="button is-primary is-fullwidth" on:click={reset}>Reset</button>
+  </div>
+</section>
+<Footer />

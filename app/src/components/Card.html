@@ -1,0 +1,59 @@
+<script>
+import { createEventDispatcher } from 'svelte'
+
+const dispatch = createEventDispatcher()
+
+export let title
+export let seconds
+export let loading
+
+function onClickHandler () {
+  dispatch('submit')  
+}
+
+function precise(x) {
+  return Number.parseFloat(x).toPrecision(4);
+}
+
+</script>  
+<div class="card">
+  <div class="card-header">
+    <h1 class="card-header-title">{title}</h1>
+  </div>
+  <div class="card-content">
+    {#if loading}
+    <img src="https://media.giphy.com/media/11toHnywQIIacg/giphy.gif" />
+    {:else if seconds !== null}
+    <div class="seconds-container">
+      <div class="seconds">{precise(seconds)}</div>
+      <div class="seconds-label">seconds</div>
+    </div>
+    {:else}
+    <img src="https://fillmurray.com/250/193" alt="murray placeholder" />
+    {/if}
+  </div>
+  <div class="card-footer">
+    {#if loading}
+      <a class="card-footer-item">Loading...</a>
+    {:else}
+    <a class="card-footer-item" on:click|stopPropagation={onClickHandler}>
+      Submit
+    </a>
+    {/if}
+  </div>
+</div>
+<style>
+.seconds {
+  font-size: 3rem;
+}
+.seconds-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 193px;
+  width: 250px;
+  background-color: whitesmoke;
+}
+</style>
+

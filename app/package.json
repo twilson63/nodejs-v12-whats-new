@@ -28,6 +28,7 @@
     "prettier": "prettier --write src/**/*.js"
   },
   "dependencies": {
+    "ramda": "^0.26.1",
     "redux-bundler": "^23.1.2"
   }
 }

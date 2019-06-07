@@ -1,6 +1,6 @@
 const path = require('path')
 const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
-const threadFile = path.resolve('./thread.js')
+const threadFile = path.resolve(__dirname + '/thread.js')
 
 module.exports = (n) => {
   return new Promise((resolve) => {
@@ -9,14 +9,14 @@ module.exports = (n) => {
     const max = 1e7;
     const threadCount = n || 2;
     const threads = new Set();;
-    console.log(`Running with ${threadCount} threads...`);
+    //console.log(`Running with ${threadCount} threads...`);
     const range = Math.ceil((max - min) / threadCount);
 
     let start = min;
     
     for (let i = 0; i < threadCount; i++) {
       const myStart = start;
-      console.log(`range: ${myStart} range: ${range}`)
+      //console.log(`range: ${myStart} range: ${range}`)
       threads.add(new Worker(threadFile, { workerData: { start: myStart, range }}));
       start += range;
     }
@@ -32,9 +32,9 @@ module.exports = (n) => {
       worker.on('error', (err) => { throw err; });
       worker.on('exit', () => {
         threads.delete(worker);
-        console.log(`Thread exiting, ${threads.size} running...`);
+        //console.log(`Thread exiting, ${threads.size} running...`);
         if (threads.size === 0) {
-          console.log('primes: ' + primes.length)
+          //console.log('primes: ' + primes.length)
           //console.log(primes.join('\n'));
           resolve(primes)
         }
@@ -45,8 +45,3 @@ module.exports = (n) => {
     }
   })
 }
-
-/*
-  generatePrimes(workerData.start, workerData.range);
-  parentPort.postMessage(primes);
-*/
