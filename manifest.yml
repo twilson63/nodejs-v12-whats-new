@@ -1,0 +1,4 @@
+applications:
+  - name: tnw-nodejs-worker-threads
+    memory: 128M
+    disk_quota: 50M
